@@ -1,4 +1,4 @@
-import os, logging
+import logging
 from flask import Flask
 from flask_rq2 import RQ
 import rq_dashboard
@@ -10,5 +10,5 @@ APP.config.from_pyfile('config.py')
 APP.register_blueprint(rq_dashboard.blueprint, url_prefix='/rq')
 RQ_CLIENT = RQ(APP)
 
-from app import routes
-logging.info('initialized app')
+from app import routes, cmds
+# logging.info('initialized app')
