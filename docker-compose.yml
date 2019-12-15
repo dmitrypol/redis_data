@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
 
-  python:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,13 +13,24 @@ services:
         published: 5000
       - target: 8888
         published: 8888
+    env_file:
+      - devops/redis.env            
     environment:
-      REDIS_HOST: redis_data_redis_1
-      APP_ENV: 'dev'
+      CONTAINER_TYPE: web
       GITHUB_TOKEN: ${GITHUB_TOKEN}
-      FLASK_ENV: development
-      FLASK_DEBUG: 1
-
+  
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/opt/redis_data
+    env_file:
+      - devops/redis.env
+    environment:
+      CONTAINER_TYPE: worker
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+  
   redis:
     image: redis:5.0.6-alpine
     ports:
