@@ -5,7 +5,7 @@ import redis
 from . import APP, RQ_CLIENT
 
 
-REDIS_CLIENT = redis.Redis(host=APP.config.get('REDIS_HOST'), db=APP.config.get('REDIS_DB'))
+REDIS_CLIENT = redis.Redis(host=APP.config.get('REDIS_HOST'), db=0)
 GH_HEADERS = {'Authorization': 'token ' + APP.config.get('GITHUB_TOKEN', '')}
 
 
